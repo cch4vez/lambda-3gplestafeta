@@ -101,8 +101,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     console.log("Entro al try")
     
     responseSoap = await axios({
-      //url: 'https://wswmsqa.estafeta.com/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
-      url: 'https://WsWms.estafeta.com:443/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
+      url: 'https://wswmsqa.estafeta.com/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
+      //url: 'https://WsWms.estafeta.com:443/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
       method: 'POST',
       headers: { 'Content-Type': 'text/xml' },
       data: xmlEnvia
@@ -131,8 +131,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
     var config = {
       method: 'post',
-      // url: 'https://2epl5gawn42tjjjw3d47p2jgay0gxcjy.lambda-url.us-east-1.on.aws/', //intlog-dev-insert-ctrl-IntegradorInsertFunction-Fo2jAm33wrur
-      url : 'https://umvi5z4w3wbnc3pckvsw4vczx40bcfwl.lambda-url.us-east-1.on.aws/', //intlog-prod-insert-ctrl-IntegradorInsertFunction-UJOAbi4FGyfd
+      url: 'https://2epl5gawn42tjjjw3d47p2jgay0gxcjy.lambda-url.us-east-1.on.aws/', //intlog-dev-insert-ctrl-IntegradorInsertFunction-Fo2jAm33wrur
+      //url : 'https://umvi5z4w3wbnc3pckvsw4vczx40bcfwl.lambda-url.us-east-1.on.aws/', //intlog-prod-insert-ctrl-IntegradorInsertFunction-UJOAbi4FGyfd
       headers: {
         'Content-Type': 'application/json'
       },
@@ -153,8 +153,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   try {
     var config = {
       method: 'post',
-      // url: 'https://xit6pe2dwi7ikm4kujbb5ulswe0mlerl.lambda-url.us-east-1.on.aws/s', //intlog-dev-3GplEstafetaReturn
-      url: 'https://5pdpjcoocdv4tnc7comrgm2vte0gcsnu.lambda-url.us-east-1.on.aws/', // intlog-3GplEstafetaReturn-prod-3GplEstafetaReturn
+      url: 'https://xit6pe2dwi7ikm4kujbb5ulswe0mlerl.lambda-url.us-east-1.on.aws/s', //intlog-dev-3GplEstafetaReturn
+      //url: 'https://5pdpjcoocdv4tnc7comrgm2vte0gcsnu.lambda-url.us-east-1.on.aws/', // intlog-3GplEstafetaReturn-prod-3GplEstafetaReturn
       headers: {
         'Content-Type': 'application/json'
       },
