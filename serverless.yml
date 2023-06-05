@@ -1,0 +1,24 @@
+service: intlog-3GplEstafeta
+# service: intlog-3GplEstafeta
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: prod
+  region: us-east-1
+
+functions:
+  3GplEstafeta:
+    handler: src/3gplestafeta.handler
+    events:
+      - httpApi: POST /3gplestafeta
+
+custom:
+  esbuild:
+    bundle: true
+    minify: true
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
