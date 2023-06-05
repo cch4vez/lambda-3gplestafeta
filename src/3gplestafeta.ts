@@ -20,7 +20,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     cuenta: 'AXO',
     codigoAcceso: 'P4$$w0rd',
     cliente: 'TAF',
-    prueba: '0',
+    prueba: '1',
     unidadNegocio: 'MEX',
   }
 
@@ -38,8 +38,13 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const base64ImageReturn = rawReturn;
   let servicio = '';
 
-  // Se debe buscar en la tabla de equivalencias el servicio, por el momento solo se asigna hardcode (switch)
+  console.log('Datos que vienen de lambda de Javi: ' + enviaRequest)
 
+  console.log('Datos que vienen de lambda de Javi:enviaRequest.origin.inputBody.id_ecom_envio ' + enviaRequest.origin.inputBody.id_ecom_envio)
+  // console.log('Datos que vienen de lambda de Javi: ')
+
+  // Se debe buscar en la tabla de equivalencias el servicio, por el momento solo se asigna hardcode (switch)
+/*
   switch ( enviaRequest.origin.inputBody.id_ecom_envio ) {
     case 21:
       servicio = '70';
@@ -61,7 +66,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       break;
   }
 
-
+*/
   const xmlEnvia = `<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:com=\"http://comercio.webservices.redprairie.com/\">
                     <soapenv:Header/>
                     <soapenv:Body>
@@ -80,11 +85,13 @@ export const handler: APIGatewayProxyHandler = async (event) => {
                                 </credenciales>
                                 <pedido>${enviaRequest.origin.inputBody.clave_pedido}</pedido>
                                 <MetodoEnvio>${enviaRequest.origin.enviaResponse.data[0].carrier}</MetodoEnvio>
-                                <Servicio>${servicio}</Servicio> 
+                                <Servicio>${enviaRequest.origin.inputBody.id_ecom_envio}</Servicio> 
                                 <guia>${enviaRequest.origin.enviaResponse.data[0].trackingNumber}</guia>
                                 <imagen>${base64ImageEnvio}</imagen>
                                 <!--Optional:-->
                                 <retorno>
+                                    <MetodoEnvio>${enviaRequest.return.enviaResponse.data[0].carrier}</MetodoEnvio>
+                                    <Servicio>${enviaRequest.return.inputBody.id_ecom_envio}</Servicio> 
                                     <guia>${enviaRequest.return.enviaResponse.data[0].trackingNumber}</guia>
                                     <imagen>${base64ImageReturn}</imagen>
                                 </retorno>
@@ -95,6 +102,10 @@ export const handler: APIGatewayProxyHandler = async (event) => {
                   </soapenv:Envelope>`
 
   console.log(xmlEnvia)
+
+  // <MetodoEnvio>${enviaRequest.destination.enviaResponse.data[0].carrier}</MetodoEnvio>
+  //                                   <Servicio>${servicio}</Servicio>
+                                    
 
   let responseSoap
   try {
