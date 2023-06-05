@@ -6,7 +6,8 @@ provider:
   name: aws
   runtime: nodejs14.x
   stage: prod
-  region: us-east-1
+  profile: 'axo'
+  region: 'us-east-1'
 
 functions:
   3GplEstafeta:

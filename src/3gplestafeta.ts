@@ -36,31 +36,12 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const imageReturn = await axios.get(enviaRequest.return.enviaResponse.data[0].label, { responseType: 'arraybuffer' });
   const rawReturn = Buffer.from(imageReturn.data).toString('base64');
   const base64ImageReturn = rawReturn;
-  let servicio = '';
+  
+  console.log('Datos que vienen de lambda de Javi: ' + enviaRequest)
 
-  // Se debe buscar en la tabla de equivalencias el servicio, por el momento solo se asigna hardcode (switch)
+  console.log('Datos que vienen de lambda de Javi:enviaRequest.origin.inputBody.id_ecom_envio ' + enviaRequest.origin.inputBody.id_ecom_envio)
 
-  switch ( enviaRequest.origin.inputBody.id_ecom_envio ) {
-    case 21:
-      servicio = '70';
-      break;
-    case 22:
-      servicio = '70';
-      break;
-    case 24:
-      servicio = '70';
-      break;
-    case 55:
-      servicio = '70';
-      break;
-    case 56:
-      servicio = 'G';
-      break;
-    default: 
-      servicio = '70' 
-      break;
-  }
-
+  
 
   const xmlEnvia = `<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:com=\"http://comercio.webservices.redprairie.com/\">
                     <soapenv:Header/>
@@ -80,7 +61,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
                                 </credenciales>
                                 <pedido>${enviaRequest.origin.inputBody.clave_pedido}</pedido>
                                 <MetodoEnvio>${enviaRequest.origin.enviaResponse.data[0].carrier}</MetodoEnvio>
-                                <Servicio>${servicio}</Servicio> 
+                                <Servicio>${enviaRequest.origin.inputBody.id_ecom_envio}</Servicio> 
                                 <guia>${enviaRequest.origin.enviaResponse.data[0].trackingNumber}</guia>
                                 <imagen>${base64ImageEnvio}</imagen>
                                 <!--Optional:-->
