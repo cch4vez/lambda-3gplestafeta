@@ -128,8 +128,27 @@ export interface Return {
     responseInsert: ResponseInsert
 }
 
+export interface Service3pl{
+    envio: envio3pl;
+    // retorno: retorno3pl
+}
+
+export interface envio3pl{
+    id_service_3pl: string;
+    descrip_service_3pl: string;
+    // new_pdf: string
+}
+
+// export interface retorno3pl{
+//     id_service_3pl: string;
+//     descrip_service_3pl: string;
+//     new_pdf: string
+// }
+
 export interface RequestModel {
     origin: Origin;
     return: Return;
+    service3pl: Service3pl
 }
+
 

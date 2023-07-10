@@ -61,7 +61,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
                                 </credenciales>
                                 <pedido>${enviaRequest.origin.inputBody.clave_pedido}</pedido>
                                 <MetodoEnvio>${enviaRequest.origin.enviaResponse.data[0].carrier}</MetodoEnvio>
-                                <Servicio>${enviaRequest.origin.inputBody.id_ecom_envio}</Servicio> 
+                                <Servicio>${enviaRequest.service3pl.envio.id_service_3pl}</Servicio> 
                                 <guia>${enviaRequest.origin.enviaResponse.data[0].trackingNumber}</guia>
                                 <imagen>${base64ImageEnvio}</imagen>
                                 <!--Optional:-->
