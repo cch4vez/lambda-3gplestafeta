@@ -26,47 +26,33 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
   console.log('******************** INICIA LLAMADA A ESTAFETA ********************')
 
-  // ${enviaRequest.enviaResponse.data[0].service}
+  // console.log('enviaRequest ' + enviaRequest)
+  // console.log('enviaRequest ' + JSON.stringify(enviaRequest))
+
+  
+  // // console.log('enviaRequest ' + JSON.stringify(event.body))
+
+  // console.log('enviaRequest.service3pl ' + JSON.stringify(enviaRequest.service3pl))
+
+  // console.log('enviaRequest.service3pl.envio.imagenPdf ' + JSON.stringify(enviaRequest.service3pl.envio.new_pdf))
+  // console.log('enviaRequest.service3pl.retorno.imagenPdf ' + JSON.stringify(enviaRequest.service3pl.retorno.new_pdf))
+
+  
+
 
   console.log('******************** GENERA IMAGENES BASE64 ********************')
-  const imageEnvio = await axios.get(enviaRequest.origin.enviaResponse.data[0].label, { responseType: 'arraybuffer' });
+  // const imageEnvio = await axios.get(enviaRequest.origin.enviaResponse.data[0].label, { responseType: 'arraybuffer' });
+  const imageEnvio = await axios.get(enviaRequest.service3pl.envio.new_pdf, { responseType: 'arraybuffer' });
   const rawEnvio = Buffer.from(imageEnvio.data).toString('base64');
   const base64ImageEnvio = rawEnvio;
 
-  const imageReturn = await axios.get(enviaRequest.return.enviaResponse.data[0].label, { responseType: 'arraybuffer' });
+  // const imageReturn = await axios.get(enviaRequest.return.enviaResponse.data[0].label, { responseType: 'arraybuffer' });
+  const imageReturn = await axios.get(enviaRequest.service3pl.retorno.new_pdf, { responseType: 'arraybuffer' });
   const rawReturn = Buffer.from(imageReturn.data).toString('base64');
   const base64ImageReturn = rawReturn;
   let servicio = '';
 
-  console.log('Datos que vienen de lambda de Javi: ' + enviaRequest)
 
-  console.log('Datos que vienen de lambda de Javi:enviaRequest.origin.inputBody.id_ecom_envio ' + enviaRequest.origin.inputBody.id_ecom_envio)
-  // console.log('Datos que vienen de lambda de Javi: ')
-
-  // Se debe buscar en la tabla de equivalencias el servicio, por el momento solo se asigna hardcode (switch)
-/*
-  switch ( enviaRequest.origin.inputBody.id_ecom_envio ) {
-    case 21:
-      servicio = '70';
-      break;
-    case 22:
-      servicio = '70';
-      break;
-    case 24:
-      servicio = '70';
-      break;
-    case 55:
-      servicio = '70';
-      break;
-    case 56:
-      servicio = 'G';
-      break;
-    default: 
-      servicio = '70' 
-      break;
-  }
-
-*/
   const xmlEnvia = `<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:com=\"http://comercio.webservices.redprairie.com/\">
                     <soapenv:Header/>
                     <soapenv:Body>
@@ -85,13 +71,13 @@ export const handler: APIGatewayProxyHandler = async (event) => {
                                 </credenciales>
                                 <pedido>${enviaRequest.origin.inputBody.clave_pedido}</pedido>
                                 <MetodoEnvio>${enviaRequest.origin.enviaResponse.data[0].carrier}</MetodoEnvio>
-                                <Servicio>${enviaRequest.origin.inputBody.id_ecom_envio}</Servicio> 
+                                <Servicio>${enviaRequest.service3pl.envio.id_service_3pl}</Servicio> 
                                 <guia>${enviaRequest.origin.enviaResponse.data[0].trackingNumber}</guia>
                                 <imagen>${base64ImageEnvio}</imagen>
                                 <!--Optional:-->
                                 <retorno>
                                     <MetodoEnvio>${enviaRequest.return.enviaResponse.data[0].carrier}</MetodoEnvio>
-                                    <Servicio>${enviaRequest.return.inputBody.id_ecom_envio}</Servicio> 
+                                    <Servicio>${enviaRequest.service3pl.retorno.id_service_3pl}</Servicio> 
                                     <guia>${enviaRequest.return.enviaResponse.data[0].trackingNumber}</guia>
                                     <imagen>${base64ImageReturn}</imagen>
                                 </retorno>
@@ -103,8 +89,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
   console.log(xmlEnvia)
 
-  // <MetodoEnvio>${enviaRequest.destination.enviaResponse.data[0].carrier}</MetodoEnvio>
-  //                                   <Servicio>${servicio}</Servicio>
                                     
 
   let responseSoap
@@ -126,6 +110,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   } finally {
     const result = responseSoap.data
     const soapToJson = convert.xml2json(responseSoap.data, { compact: true, spaces: 4 });
+    console.log("Datos de soapToJson ")
+    console.log(soapToJson)
     const objEstafeta = (JSON.parse(soapToJson)['soap:Envelope']['soap:Body']['EnviaDataResponse']['EnviaDataResult'])
     console.log("objetoEstafeta 3gplestafeta lambda")
     console.log(objEstafeta);
