@@ -40,6 +40,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   console.log('Datos que vienen de lambda de Javi: ' + enviaRequest)
 
   console.log('Datos que vienen de lambda de Javi:enviaRequest.origin.inputBody.id_ecom_envio ' + enviaRequest.origin.inputBody.id_ecom_envio)
+  console.log('Datos que vienen de lambda de Javi:enviaRequest.service3pl.id_service_3pl ' + enviaRequest.service3pl.id_service_3pl)
+  console.log('Datos que vienen de lambda de Javi:enviaRequest.service3pl.descrip_service_3pl ' + enviaRequest.service3pl.descrip_service_3pl)
 
   
 
@@ -61,7 +63,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
                                 </credenciales>
                                 <pedido>${enviaRequest.origin.inputBody.clave_pedido}</pedido>
                                 <MetodoEnvio>${enviaRequest.origin.enviaResponse.data[0].carrier}</MetodoEnvio>
-                                <Servicio>${enviaRequest.service3pl.envio.id_service_3pl}</Servicio> 
+                                <Servicio>${enviaRequest.service3pl.id_service_3pl}</Servicio> 
                                 <guia>${enviaRequest.origin.enviaResponse.data[0].trackingNumber}</guia>
                                 <imagen>${base64ImageEnvio}</imagen>
                                 <!--Optional:-->
