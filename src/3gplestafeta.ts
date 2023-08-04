@@ -20,7 +20,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     cuenta: 'AXO',
     codigoAcceso: 'P4$$w0rd',
     cliente: 'TAF',
-    prueba: '1',
+    prueba: '0',
     unidadNegocio: 'MEX',
   }
 
@@ -96,8 +96,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     console.log("Entro al try")
     
     responseSoap = await axios({
-      url: 'https://wswmsqa.estafeta.com/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
-      //url: 'https://WsWms.estafeta.com:443/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
+      // url: 'https://wswmsqa.estafeta.com/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
+      url: 'https://WsWms.estafeta.com:443/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
       method: 'POST',
       headers: { 'Content-Type': 'text/xml' },
       data: xmlEnvia

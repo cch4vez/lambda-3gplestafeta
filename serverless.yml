@@ -5,7 +5,7 @@ useDotenv: true
 provider:
   name: aws
   runtime: nodejs14.x
-  stage: dev
+  stage: prod
   profile: 'axo'
   region: 'us-east-1'
 
