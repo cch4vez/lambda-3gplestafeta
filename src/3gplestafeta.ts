@@ -120,54 +120,54 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   }
 
 
-  enviaRequest.origin.estafetaResponse = responseEstafeta
+  // enviaRequest.origin.estafetaResponse = responseEstafeta
 
 
-  console.log('******************** INICIA LLAMADA LAMBDA DE PERSISTENCIA ENVIO ********************')
-  try {
+  // console.log('******************** INICIA LLAMADA LAMBDA DE PERSISTENCIA ENVIO ********************')
+  // try {
 
-    var config = {
-      method: 'post',
-      url: 'https://2epl5gawn42tjjjw3d47p2jgay0gxcjy.lambda-url.us-east-1.on.aws/', //intlog-dev-insert-ctrl-IntegradorInsertFunction-Fo2jAm33wrur
-      //url : 'https://umvi5z4w3wbnc3pckvsw4vczx40bcfwl.lambda-url.us-east-1.on.aws/', //intlog-prod-insert-ctrl-IntegradorInsertFunction-UJOAbi4FGyfd
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: JSON.stringify(enviaRequest.origin)
-    };
+  //   var config = {
+  //     method: 'post',
+  //     url: 'https://2epl5gawn42tjjjw3d47p2jgay0gxcjy.lambda-url.us-east-1.on.aws/', //intlog-dev-insert-ctrl-IntegradorInsertFunction-Fo2jAm33wrur
+  //     url : 'https://umvi5z4w3wbnc3pckvsw4vczx40bcfwl.lambda-url.us-east-1.on.aws/', //intlog-prod-insert-ctrl-IntegradorInsertFunction-UJOAbi4FGyfd
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     data: JSON.stringify(enviaRequest.origin)
+  //   };
 
-    const responseEnvio = await axios(config)
-    console.log('******************** PERSISTENCIA ENVIO RESPONDE ********************')
-    console.log(responseEnvio.data)
-    enviaRequest.origin.responseInsert = responseEnvio.data
+  //   const responseEnvio = await axios(config)
+  //   console.log('******************** PERSISTENCIA ENVIO RESPONDE ********************')
+  //   console.log(responseEnvio.data)
+  //   enviaRequest.origin.responseInsert = responseEnvio.data
 
-  } catch (error) {
-    console.log('ERROR AL LLAMAR AL INSERT DE ENVIO')
-    console.log(error)
-  }
+  // } catch (error) {
+  //   console.log('ERROR AL LLAMAR AL INSERT DE ENVIO')
+  //   console.log(error)
+  // }
 
-  console.log('******************** INICIA LLAMADA LAMBDA DE PERSISTENCIA RETORNO ********************')
-  try {
-    var config = {
-      method: 'post',
-      url: 'https://xit6pe2dwi7ikm4kujbb5ulswe0mlerl.lambda-url.us-east-1.on.aws/s', //intlog-dev-3GplEstafetaReturn
-      //url: 'https://5pdpjcoocdv4tnc7comrgm2vte0gcsnu.lambda-url.us-east-1.on.aws/', // intlog-3GplEstafetaReturn-prod-3GplEstafetaReturn
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: JSON.stringify(enviaRequest.return)
-    };
+  // console.log('******************** INICIA LLAMADA LAMBDA DE PERSISTENCIA RETORNO ********************')
+  // try {
+  //   var config = {
+  //     method: 'post',
+  //     url: 'https://xit6pe2dwi7ikm4kujbb5ulswe0mlerl.lambda-url.us-east-1.on.aws/s', //intlog-dev-3GplEstafetaReturn
+  //     url: 'https://5pdpjcoocdv4tnc7comrgm2vte0gcsnu.lambda-url.us-east-1.on.aws/', // intlog-3GplEstafetaReturn-prod-3GplEstafetaReturn
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     data: JSON.stringify(enviaRequest.return)
+  //   };
 
-    const responseReturn = await axios(config)
-    console.log('******************** PERSISTENCIA RETORNO RESPONDE ********************')
-    console.log(responseReturn.data)
-    enviaRequest.return.responseInsert = responseReturn.data
-  } catch (error) {
-    console.log('ERROR AL LLAMAR AL INSERT DE RETORNO')
-    console.log(error)
-  }
+  //   const responseReturn = await axios(config)
+  //   console.log('******************** PERSISTENCIA RETORNO RESPONDE ********************')
+  //   console.log(responseReturn.data)
+  //   enviaRequest.return.responseInsert = responseReturn.data
+  // } catch (error) {
+  //   console.log('ERROR AL LLAMAR AL INSERT DE RETORNO')
+  //   console.log(error)
+  // }
 
-  console.log(JSON.stringify(enviaRequest, null, 4))
+  // console.log(JSON.stringify(enviaRequest, null, 4))
 
   return {
     statusCode: 200,
