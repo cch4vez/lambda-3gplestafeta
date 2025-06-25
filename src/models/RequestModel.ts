@@ -117,15 +117,15 @@ export interface ResponseInsert {
 export interface Origin {
     inputBody: InputBody;
     enviaResponse: EnviaResponse;
-    estafetaResponse: EstafetaResponse;
-    responseInsert: ResponseInsert
+    estafetaResponse?: EstafetaResponse;
+    responseInsert?: ResponseInsert
 }
 
 export interface Return {
     inputBody: InputBody;
     enviaResponse: EnviaResponse;
-    estafetaResponse: EstafetaResponse;
-    responseInsert: ResponseInsert
+    estafetaResponse?: EstafetaResponse;
+    responseInsert?: ResponseInsert
 }
 
 export interface Service3pl{

@@ -5,7 +5,9 @@ import convert from 'xml-js'
 
 export const handler: APIGatewayProxyHandler = async (event) => {
   console.log('******************** INICIA GENERACION GUIA DE ENVIO ********************')
-  const enviaRequest: RequestModel = event.body ? JSON.parse(event.body) : event
+  const enviaRequest: RequestModel = event?.body ? JSON.parse(event?.body) : event
+  console.log("event: " + JSON.stringify(event?.body))
+  console.log("event keys: " + Object.keys(JSON.stringify(enviaRequest)))
   const responseEstafeta: EstafetaResponse = { description: 'xxx', statusCode: 666 }
   console.log(JSON.stringify(enviaRequest, null, 4))
 
@@ -32,10 +34,14 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   
   // // console.log('enviaRequest ' + JSON.stringify(event.body))
 
-  // console.log('enviaRequest.service3pl ' + JSON.stringify(enviaRequest.service3pl))
+  console.log('enviaRequest.service3pl ' + JSON.stringify(enviaRequest.service3pl))
 
-  // console.log('enviaRequest.service3pl.envio.imagenPdf ' + JSON.stringify(enviaRequest.service3pl.envio.new_pdf))
-  // console.log('enviaRequest.service3pl.retorno.imagenPdf ' + JSON.stringify(enviaRequest.service3pl.retorno.new_pdf))
+  console.log('enviaRequest.service3pl.envio.new_pdf ' + JSON.stringify(enviaRequest.service3pl.envio.new_pdf))
+  console.log('enviaRequest.service3pl.retorno.new_pdf ' + JSON.stringify(enviaRequest.service3pl.retorno.new_pdf))
+
+
+  console.log('enviaRequest.service3pl.envio.new_pdf sin JSON.stringify' + enviaRequest.service3pl.envio.new_pdf)
+  console.log('enviaRequest.service3pl.retorno.new_pdf sin JSON.stringify ' + enviaRequest.service3pl.retorno.new_pdf)
 
   
 
@@ -43,14 +49,37 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   console.log('******************** GENERA IMAGENES BASE64 ********************')
   // const imageEnvio = await axios.get(enviaRequest.origin.enviaResponse.data[0].label, { responseType: 'arraybuffer' });
   const imageEnvio = await axios.get(enviaRequest.service3pl.envio.new_pdf, { responseType: 'arraybuffer' });
+  console.log("imageEnvio " + imageEnvio)
   const rawEnvio = Buffer.from(imageEnvio.data).toString('base64');
+  console.log("rawEnvio " + rawEnvio)
   const base64ImageEnvio = rawEnvio;
+  console.log("base64ImageEnvio " + base64ImageEnvio)
+
 
   // const imageReturn = await axios.get(enviaRequest.return.enviaResponse.data[0].label, { responseType: 'arraybuffer' });
   const imageReturn = await axios.get(enviaRequest.service3pl.retorno.new_pdf, { responseType: 'arraybuffer' });
+  console.log("imageReturn " + imageReturn)
   const rawReturn = Buffer.from(imageReturn.data).toString('base64');
+  console.log("rawReturn " + rawReturn)
   const base64ImageReturn = rawReturn;
+  console.log("base64ImageReturn " + base64ImageReturn)
   let servicio = '';
+
+  console.log("*************************** ants de las propiedades ******")
+
+  console.log("pedido envio  ***: " + JSON.stringify(enviaRequest.origin.inputBody.clave_pedido))
+
+  console.log("metodoEnvio envio: " + JSON.stringify(enviaRequest.origin.enviaResponse.data[0].carrier))
+  console.log("servicio envio: " + JSON.stringify(enviaRequest.service3pl.envio.id_service_3pl))
+  console.log("guia envio: " + JSON.stringify(enviaRequest.origin.enviaResponse.data[0].trackingNumber))
+  console.log("imagen envio: " + base64ImageEnvio)
+
+  console.log("metodoEnvio retorno: " + JSON.stringify(enviaRequest.return.enviaResponse.data[0].carrier))
+  console.log("servicio retorno: " + JSON.stringify(enviaRequest.service3pl.retorno.id_service_3pl))
+  console.log("guia retorno: " + JSON.stringify(enviaRequest.return.enviaResponse.data[0].trackingNumber))
+  console.log("imagen retorno: " + base64ImageReturn)
+
+
 
 
   const xmlEnvia = `<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:com=\"http://comercio.webservices.redprairie.com/\">
