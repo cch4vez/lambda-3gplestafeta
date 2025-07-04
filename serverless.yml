@@ -1,20 +1,28 @@
-service: intlog-3GplEstafeta
+service: intlog-3pl-estafeta
 # service: intlog-3GplEstafeta
 useDotenv: true
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs16.x
   stage: dev
-  profile: 'axo'
+  profile: 'axo_qa2025'
   region: 'us-east-1'
 
+  iam:
+    role: arn:aws:iam::536697243010:role/intlog-dev-lambda-vpc-role
+  deploymentBucket:
+    name: intlog-qa-lambdasbucket
+    serverSideEncryption: AES256
 
 functions:
-  3GplEstafeta:
+  3plEstafeta:
     handler: src/3gplestafeta.handler
     events:
-      - httpApi: POST /3gplestafeta
+      # - httpApi: POST /3gplestafeta
+      - http:
+          path: 3gplestafeta
+          method: post
 
 custom:
   esbuild:
@@ -24,3 +32,4 @@ custom:
 plugins:
   - serverless-esbuild
   - serverless-offline
+  - serverless-prune-plugin
