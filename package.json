@@ -1,7 +1,6 @@
 {
   "name": "ts-lambda",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "serverless offline",
@@ -22,6 +21,16 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "pg": "^8.16.3",
     "xml-js": "^1.6.11"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cch4vez/lambda-3gplestafeta.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cch4vez/lambda-3gplestafeta/issues"
+  },
+  "homepage": "https://github.com/cch4vez/lambda-3gplestafeta#readme",
+  "description": ""
 }

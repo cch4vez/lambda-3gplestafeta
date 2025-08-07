@@ -151,3 +151,10 @@ export interface RequestModel {
     service3pl: Service3pl
 }
 
+export interface RequestModelBolpis {
+    origin: Origin
+    return: Return;
+    service3pl: Service3pl
+}
+
+

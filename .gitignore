@@ -53,3 +53,5 @@ diagram
 package-lock.json
 .serverless/
 package.json
+
+src/3gplestafeta_bolpis copy.ts
