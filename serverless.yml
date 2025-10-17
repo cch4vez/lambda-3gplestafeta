@@ -1,42 +1,38 @@
-service: intlog-3pl-estafeta-bolpis
-# service: intlog-3GplEstafeta
+# service: intlog-3pl-estafeta-bolpis
+service: intlog-3GplEstafeta
 useDotenv: true
 
 provider:
   name: aws
   runtime: nodejs16.x
-  stage: dev
-  profile: 'axo_qa2025'
+  stage: prod
+  profile: 'axo_2025'
   region: 'us-east-1'
   environment:
     DB_HOST: axo-inlog-prod-db.clw2k6go2ytb.us-east-1.rds.amazonaws.com
     DB_PORT: 5432
-    DB_NAME: GOBIERNO_CENTRAL_INTEGRADOR_DEV
+    DB_NAME: GOBIERNO_CENTRAL_INTEGRADOR
     DB_USER: usrintlog
     DB_PASSWORD: M0u#kBE6E5acp
   vpc:
     securityGroupIds:
-      - sg-02129ab3d14884a12 
+      - sg-0002ae84e68052d98 
     subnetIds:
-      - subnet-0544d50d3572436e1
-      - subnet-06c5ef769a4305f2a
-      - subnet-0811464080eddb43e
-      - subnet-0fa231d108e991ca9
-      - subnet-0a50af69dd101cfb3
-      - subnet-06fcf3c73f8e7a29c
-      - subnet-09640d54adee3964e
-      - subnet-0f6393f9b11c9a4b4
-
+      - subnet-007e2686210d3098b
+      - subnet-078a14c598aaabe46
+      - subnet-011936c5ed057a6ba
 
   iam:
-    role: arn:aws:iam::536697243010:role/intlog-dev-lambda-vpc-role
+    role: arn:aws:iam::203918861826:role/intlog-prod-lambda-vpc-role
   deploymentBucket:
-    name: intlog-qa-lambdasbucket
+    name: intlog-prd-lambdasbucket
     serverSideEncryption: AES256
 
 functions:
   3plEstafeta:
-    handler: src/3gplestafeta_bolpis.handler
+    handler: src/3gplestafeta.handler
+    # handler: src/3gplestafeta_bolpis.handler
+    timeout: 30
     url: true
     events:
       # - httpApi: POST /3gplestafeta

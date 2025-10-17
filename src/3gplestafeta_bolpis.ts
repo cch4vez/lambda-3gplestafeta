@@ -45,7 +45,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         cuenta: 'AXO',
         codigoAcceso: 'P4$$w0rd',
         cliente: 'TAF',
-        prueba: '1',
+        prueba: '0',
         unidadNegocio: 'MEX',
     }
 
@@ -78,31 +78,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
             let albaran;
             let base64ImageEnvio;
             console.log('enviaRequest.service3pl:' + JSON.stringify(enviaRequest.service3pl))
-            /*
-            try {
-                await client.connect();
-                const query = `select albaran from dbo.cntrl_consolidado_dev where tracking_number_envio = '${enviaRequest.origin.enviaResponse.data[0].trackingNumber}' limit 1`;
-                console.log('query: ' + query)
-                const rs_albaran = await client.query(query);
-                albaran = rs_albaran.rows[0]['albaran']
-                console.log('albaran: ' + albaran)
-                pdf_file = enviaRequest.service3pl.envio.new_pdf
-                console.log('enviaRequest.service3pl.envio.new_pdf: ' + pdf_file)
-            } catch (error) {
-                console.error('❌ Error querying DB:', error);
-            } finally {
-                try {
-                await client.end();
-                console.log('✅ PostgreSQL connection closed');
-                } catch (closeErr) {
-                console.error('❌ Error closing DB connection:', closeErr);
-                }
-            }
-                */
-
-            // console.log('Salgo del try para conseguir el albaran')
-
-            // console.log('enviaRequest: ' + JSON.stringify(enviaRequest))
 
             try{
                 const imageEnvio = await axios.get(enviaRequest.service3pl.envio.new_pdf, { responseType: 'arraybuffer' });
@@ -228,8 +203,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         console.log("Entro al try")
         
         responseSoap = await axios({
-        url: 'https://wswmsqa.estafeta.com/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
-        //url: 'https://WsWms.estafeta.com:443/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
+        // url: 'https://wswmsqa.estafeta.com/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
+        url: 'https://WsWms.estafeta.com:443/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
         method: 'POST',
         headers: { 'Content-Type': 'text/xml' },
         data: xmlEnvia

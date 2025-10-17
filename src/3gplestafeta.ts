@@ -20,24 +20,11 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     cuenta: 'AXO',
     codigoAcceso: 'P4$$w0rd',
     cliente: 'TAF',
-    prueba: '1',
+    prueba: '0',
     unidadNegocio: 'MEX',
   }
 
   console.log('******************** INICIA LLAMADA A ESTAFETA ********************')
-
-  // console.log('enviaRequest ' + enviaRequest)
-  // console.log('enviaRequest ' + JSON.stringify(enviaRequest))
-
-  
-  // // console.log('enviaRequest ' + JSON.stringify(event.body))
-
-  // console.log('enviaRequest.service3pl ' + JSON.stringify(enviaRequest.service3pl))
-
-  // console.log('enviaRequest.service3pl.envio.imagenPdf ' + JSON.stringify(enviaRequest.service3pl.envio.new_pdf))
-  // console.log('enviaRequest.service3pl.retorno.imagenPdf ' + JSON.stringify(enviaRequest.service3pl.retorno.new_pdf))
-
-  
 
 
   console.log('******************** GENERA IMAGENES BASE64 ********************')
@@ -96,8 +83,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     console.log("Entro al try")
     
     responseSoap = await axios({
-      url: 'https://wswmsqa.estafeta.com/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
-      //url: 'https://WsWms.estafeta.com:443/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
+    //   url: 'https://wswmsqa.estafeta.com/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
+      url: 'https://WsWms.estafeta.com:443/wmtaf_ecommerce/RedprairieInboundTransactions?wsdl',
       method: 'POST',
       headers: { 'Content-Type': 'text/xml' },
       data: xmlEnvia
@@ -120,54 +107,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   }
 
 
-  // enviaRequest.origin.estafetaResponse = responseEstafeta
-
-
-  // console.log('******************** INICIA LLAMADA LAMBDA DE PERSISTENCIA ENVIO ********************')
-  // try {
-
-  //   var config = {
-  //     method: 'post',
-  //     url: 'https://2epl5gawn42tjjjw3d47p2jgay0gxcjy.lambda-url.us-east-1.on.aws/', //intlog-dev-insert-ctrl-IntegradorInsertFunction-Fo2jAm33wrur
-  //     url : 'https://umvi5z4w3wbnc3pckvsw4vczx40bcfwl.lambda-url.us-east-1.on.aws/', //intlog-prod-insert-ctrl-IntegradorInsertFunction-UJOAbi4FGyfd
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     data: JSON.stringify(enviaRequest.origin)
-  //   };
-
-  //   const responseEnvio = await axios(config)
-  //   console.log('******************** PERSISTENCIA ENVIO RESPONDE ********************')
-  //   console.log(responseEnvio.data)
-  //   enviaRequest.origin.responseInsert = responseEnvio.data
-
-  // } catch (error) {
-  //   console.log('ERROR AL LLAMAR AL INSERT DE ENVIO')
-  //   console.log(error)
-  // }
-
-  // console.log('******************** INICIA LLAMADA LAMBDA DE PERSISTENCIA RETORNO ********************')
-  // try {
-  //   var config = {
-  //     method: 'post',
-  //     url: 'https://xit6pe2dwi7ikm4kujbb5ulswe0mlerl.lambda-url.us-east-1.on.aws/s', //intlog-dev-3GplEstafetaReturn
-  //     url: 'https://5pdpjcoocdv4tnc7comrgm2vte0gcsnu.lambda-url.us-east-1.on.aws/', // intlog-3GplEstafetaReturn-prod-3GplEstafetaReturn
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     data: JSON.stringify(enviaRequest.return)
-  //   };
-
-  //   const responseReturn = await axios(config)
-  //   console.log('******************** PERSISTENCIA RETORNO RESPONDE ********************')
-  //   console.log(responseReturn.data)
-  //   enviaRequest.return.responseInsert = responseReturn.data
-  // } catch (error) {
-  //   console.log('ERROR AL LLAMAR AL INSERT DE RETORNO')
-  //   console.log(error)
-  // }
-
-  // console.log(JSON.stringify(enviaRequest, null, 4))
 
   return {
     statusCode: 200,
