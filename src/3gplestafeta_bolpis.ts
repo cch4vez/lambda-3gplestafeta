@@ -7,6 +7,8 @@ const { Client } = require('pg');
 
 export const handler: APIGatewayProxyHandler = async (event) => {
 
+    
+
     const client = new Client({
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
@@ -74,13 +76,18 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         // lógica con enviaRequest.origin
 
             let albaran;
+            let base64ImageEnvio;
+            console.log('enviaRequest.service3pl:' + JSON.stringify(enviaRequest.service3pl))
+            /*
             try {
                 await client.connect();
                 const query = `select albaran from dbo.cntrl_consolidado_dev where tracking_number_envio = '${enviaRequest.origin.enviaResponse.data[0].trackingNumber}' limit 1`;
                 console.log('query: ' + query)
                 const rs_albaran = await client.query(query);
                 albaran = rs_albaran.rows[0]['albaran']
-                console.log('albaran ' + albaran)
+                console.log('albaran: ' + albaran)
+                pdf_file = enviaRequest.service3pl.envio.new_pdf
+                console.log('enviaRequest.service3pl.envio.new_pdf: ' + pdf_file)
             } catch (error) {
                 console.error('❌ Error querying DB:', error);
             } finally {
@@ -91,11 +98,25 @@ export const handler: APIGatewayProxyHandler = async (event) => {
                 console.error('❌ Error closing DB connection:', closeErr);
                 }
             }
-    
+                */
 
-            const imageEnvio = await axios.get(enviaRequest.service3pl.envio.new_pdf, { responseType: 'arraybuffer' });
-            const rawEnvio = Buffer.from(imageEnvio.data).toString('base64');
-            const base64ImageEnvio = rawEnvio;
+            // console.log('Salgo del try para conseguir el albaran')
+
+            // console.log('enviaRequest: ' + JSON.stringify(enviaRequest))
+
+            try{
+                const imageEnvio = await axios.get(enviaRequest.service3pl.envio.new_pdf, { responseType: 'arraybuffer' });
+                console.log('imagenEnvio')
+                const rawEnvio = Buffer.from(imageEnvio.data).toString('base64');
+                console.log('rawEnvio')
+                base64ImageEnvio = rawEnvio;
+                console.log('base64')
+                albaran = enviaRequest.service3pl.envio.albaran;
+
+            }catch(error){
+                console.error('❌ Error imagen 64 origin:', error);
+            }
+            
         
         
             xmlEnvia = `<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:com=\"http://comercio.webservices.redprairie.com/\">
@@ -137,9 +158,28 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     if (hasReturn) {
         console.log('✅ Procesando guía con RETURN...');
             // lógica con enviaRequest.return
-            const imageReturn = await axios.get(enviaRequest.service3pl.retorno.new_pdf, { responseType: 'arraybuffer' });
-            const rawReturn = Buffer.from(imageReturn.data).toString('base64');
-            const base64ImageReturn = rawReturn;
+
+            let albaran;
+            let base64ImageReturn;
+
+            console.log('enviaRequest.service3pl:' + JSON.stringify(enviaRequest.service3pl))
+
+            try{
+                const imageEnvio = await axios.get(enviaRequest.service3pl.retorno.new_pdf, { responseType: 'arraybuffer' });
+                console.log('imagenEnvio')
+                const rawEnvio = Buffer.from(imageEnvio.data).toString('base64');
+                console.log('rawEnvio')
+                base64ImageReturn = rawEnvio;
+                console.log('base64')
+                albaran = enviaRequest.service3pl.retorno.albaran;
+
+            }catch(error){
+                console.error('❌ Error imagen 64: return', error);
+            }
+
+            // const imageReturn = await axios.get(enviaRequest.service3pl.retorno.new_pdf, { responseType: 'arraybuffer' });
+            // const rawReturn = Buffer.from(imageReturn.data).toString('base64');
+            // const base64ImageReturn = rawReturn;
         
         
             xmlEnvia = `<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:com=\"http://comercio.webservices.redprairie.com/\">

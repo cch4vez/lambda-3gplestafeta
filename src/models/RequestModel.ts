@@ -136,13 +136,15 @@ export interface Service3pl{
 export interface envio3pl{
     id_service_3pl: string;
     descrip_service_3pl: string;
-    new_pdf: string
+    new_pdf: string,
+    albaran: string
 }
 
 export interface retorno3pl{
     id_service_3pl: string;
     descrip_service_3pl: string;
-    new_pdf: string
+    new_pdf: string,
+    albaran: string
 }
 
 export interface RequestModel {
